@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Survivre en L2 | Le Tamagotchi d'étudiant</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <main class="console">
+    <h1>Survivre en L2</h1>
+    <p>Prends soin de ton étudiant. Rends le projet avant que tout s'effondre.</p>
+
+    <div id="visage" class="visage">🙂</div>
+    <p id="message" aria-live="polite">Ta journée commence. Que fais-tu ?</p>
+
+    <div class="jauge">
+      <span>Énergie</span>
+      <div class="barre"><div id="barre-energie" class="remplissage energie"></div></div>
+    </div>
+    <div class="jauge">
+      <span>Moral</span>
+      <div class="barre"><div id="barre-moral" class="remplissage moral"></div></div>
+    </div>
+    <div class="jauge">
+      <span>Projet</span>
+      <div class="barre"><div id="barre-projet" class="remplissage projet"></div></div>
+    </div>
+
+    <div id="boutons" class="boutons"></div>
+
+    <button id="recommencer" type="button" class="recommencer">Recommencer</button>
+    <p class="score">Parties gagnées : <span id="victoires">0</span></p>
+  </main>
+</body>
+</html>

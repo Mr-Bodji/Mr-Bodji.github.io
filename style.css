@@ -1,0 +1,91 @@
+:root {
+  --fond: #1d2b53;
+  --ecran: #c9e8c0;
+  --encre: #1b2a1b;
+  --energie: #f4b223;
+  --moral: #e8618c;
+  --projet: #2e9e5b;
+}
+
+body {
+  margin: 0;
+  padding: 24px;
+  background-color: var(--fond);
+  font-family: "Courier New", monospace;
+  color: var(--encre);
+}
+
+.console {
+  max-width: 520px;
+  margin: 24px auto;
+  padding: 24px;
+  background-color: var(--ecran);
+  border: 6px solid var(--encre);
+  border-radius: 24px;
+  text-align: center;
+}
+
+h1 { margin: 0 0 8px; font-size: 32px; }
+
+.visage {
+  font-size: 90px;
+  margin: 16px 0 8px;
+  transition: transform 0.2s;
+}
+
+/* Petit rebond quand on clique sur un bouton d'action */
+.visage.rebond { animation: rebond 0.3s ease-out; }
+
+@keyframes rebond {
+  0%   { transform: translateY(0); }
+  40%  { transform: translateY(-18px); }
+  100% { transform: translateY(0); }
+}
+
+#message { min-height: 48px; font-weight: bold; }
+
+.jauge { display: flex; align-items: center; gap: 12px; margin: 10px 0; }
+.jauge span { width: 80px; text-align: left; }
+
+.barre {
+  flex: 1;
+  height: 22px;
+  background-color: white;
+  border: 3px solid var(--encre);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.remplissage { height: 100%; width: 50%; transition: width 0.4s; }
+.energie { background-color: var(--energie); }
+.moral   { background-color: var(--moral); }
+.projet  { background-color: var(--projet); }
+
+.boutons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+button {
+  padding: 12px;
+  border: 3px solid var(--encre);
+  border-radius: 8px;
+  background-color: white;
+  font-family: inherit;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover { background-color: var(--energie); }
+button:focus-visible { outline: 3px solid var(--fond); }
+
+.recommencer { margin-top: 16px; background-color: transparent; font-size: 14px; }
+
+.score { margin-bottom: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .visage.rebond { animation: none; }
+  .remplissage { transition: none; }
+}
