@@ -6,11 +6,11 @@ const actions = [
   { nom: "☕ Boire un café", energie: 25, moral: 5, projet: 0,
     message: "Ton cœur bat à 180 bpm. Tu te sens invincible." },
   { nom: "😴 Dormir", energie: 40, moral: 10, projet: -5,
-    message: "T'es loin là. Le projet n'a pas avancé." },
+    message: "Tu rêves de points-virgules. Le projet n'a pas avancé." },
   { nom: "💻 Coder", energie: -20, moral: -5, projet: 20,
-    message: "Tu écris du code. Il marche mais vas-y tu sais pas pourquoi." },
+    message: "Tu écris du code. Il marche. Tu ne sais pas pourquoi." },
   { nom: "📺 Regarder une série", energie: -5, moral: 25, projet: -10,
-    message: "Il est 3h du matin. T'enchaine mais tu mérite pas" }
+    message: "« Juste un épisode. » Il est 3h du matin." }
 ];
 
 // ============================================================
@@ -54,7 +54,7 @@ function verifierFin() {
   if (stats.projet >= 100) {
     if (stats.energie <= 0) {
       // Victoire, mais complètement épuisé : phrase spéciale
-      message.textContent = "Même si tu t'es gaspillé pour faire ce projet, tu as réussi champion.";
+      message.textContent = "Même si tu t'es gaspillé pour faire ce projet, tu as réussi, champion.";
       visage.textContent = "🥹";
     } else {
       message.textContent = "🏆 Projet rendu à temps ! Tu es sauvé.";
@@ -64,7 +64,7 @@ function verifierFin() {
     victoires = victoires + 1;
     localStorage.setItem("victoiresEtudiant", victoires);
   } else if (stats.energie <= 0) {
-    message.textContent = "Tu t'es endormi sur ton clavier. T'es foiré j'te mens pas.";
+    message.textContent = "Tu t'es endormi sur ton clavier. Fin de partie.";
     visage.textContent = "😵";
     partieFinie = true;
   } else if (stats.moral <= 0) {
@@ -100,6 +100,7 @@ function agir(action) {
 function recommencer() {
   stats = { energie: 60, moral: 60, projet: 0 };
   partieFinie = false;
+  visage.classList.remove("rebond"); // le visage retrouve son animation "flotter"
   message.textContent = "Ta journée commence. Que fais-tu ?";
   visage.textContent = "🙂";
   localStorage.setItem("statsEtudiant", JSON.stringify(stats));

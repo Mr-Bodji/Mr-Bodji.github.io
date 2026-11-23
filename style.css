@@ -1,6 +1,8 @@
+/* ---------- Couleurs (change-les ici, en un seul endroit) ---------- */
 :root {
-  --fond: #1d2b53;
-  --ecran: #c9e8c0;
+  --fond-haut: #1d2b53;
+  --fond-bas: #7e2553;
+  --ecran: #d6f0cc;
   --encre: #1b2a1b;
   --energie: #f4b223;
   --moral: #e8618c;
@@ -9,83 +11,147 @@
 
 body {
   margin: 0;
+  min-height: 100vh;
   padding: 24px;
-  background-color: var(--fond);
+  box-sizing: border-box;
   font-family: "Courier New", monospace;
   color: var(--encre);
+  /* Fond dégradé : du bleu nuit en haut au violet en bas */
+  background: linear-gradient(180deg, var(--fond-haut), var(--fond-bas));
+  background-attachment: fixed;
 }
 
+/* ---------- La console ---------- */
 .console {
   max-width: 520px;
-  margin: 24px auto;
-  padding: 24px;
+  margin: 16px auto;
+  padding: 28px;
   background-color: var(--ecran);
   border: 6px solid var(--encre);
-  border-radius: 24px;
+  border-radius: 28px;
   text-align: center;
+  /* Ombre pour donner du relief */
+  box-shadow: 0 12px 0 var(--encre), 0 24px 40px rgba(0, 0, 0, 0.5);
 }
 
-h1 { margin: 0 0 8px; font-size: 32px; }
+h1 {
+  margin: 0 0 8px;
+  font-size: 34px;
+  text-shadow: 3px 3px 0 var(--energie);
+}
 
+/* ---------- Le visage : il flotte doucement en continu ---------- */
 .visage {
-  font-size: 90px;
+  font-size: 96px;
   margin: 16px 0 8px;
-  transition: transform 0.2s;
+  animation: flotter 2.5s ease-in-out infinite;
 }
 
-/* Petit rebond quand on clique sur un bouton d'action */
+@keyframes flotter {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+
+/* Petit rebond quand on clique sur une action (classe ajoutée par le JS) */
 .visage.rebond { animation: rebond 0.3s ease-out; }
 
 @keyframes rebond {
-  0%   { transform: translateY(0); }
-  40%  { transform: translateY(-18px); }
-  100% { transform: translateY(0); }
+  0%   { transform: translateY(0) scale(1); }
+  40%  { transform: translateY(-20px) scale(1.15); }
+  100% { transform: translateY(0) scale(1); }
 }
 
-#message { min-height: 48px; font-weight: bold; }
+/* Le message dans une petite bulle */
+#message {
+  min-height: 48px;
+  margin: 12px 0 20px;
+  padding: 10px 14px;
+  font-weight: bold;
+  background-color: white;
+  border: 3px solid var(--encre);
+  border-radius: 12px;
+}
 
-.jauge { display: flex; align-items: center; gap: 12px; margin: 10px 0; }
-.jauge span { width: 80px; text-align: left; }
+/* ---------- Les jauges ---------- */
+.jauge { display: flex; align-items: center; gap: 12px; margin: 12px 0; }
+.jauge span { width: 80px; text-align: left; font-weight: bold; }
 
 .barre {
   flex: 1;
-  height: 22px;
+  height: 26px;
   background-color: white;
   border: 3px solid var(--encre);
-  border-radius: 6px;
+  border-radius: 14px;
   overflow: hidden;
+  box-shadow: inset 0 3px 0 rgba(0, 0, 0, 0.15);
 }
 
-.remplissage { height: 100%; width: 50%; transition: width 0.4s; }
-.energie { background-color: var(--energie); }
-.moral   { background-color: var(--moral); }
-.projet  { background-color: var(--projet); }
+.remplissage {
+  height: 100%;
+  width: 50%;
+  border-radius: 10px;
+  transition: width 0.5s ease-out;
+}
 
+/* Chaque barre a un léger dégradé pour un effet brillant */
+.energie { background: linear-gradient(180deg, #ffd96b, var(--energie)); }
+.moral   { background: linear-gradient(180deg, #ff9ab9, var(--moral)); }
+.projet  { background: linear-gradient(180deg, #62d68f, var(--projet)); }
+
+/* ---------- Les boutons ---------- */
 .boutons {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 20px;
+  gap: 12px;
+  margin-top: 24px;
 }
 
 button {
-  padding: 12px;
+  padding: 14px 10px;
   border: 3px solid var(--encre);
-  border-radius: 8px;
+  border-radius: 12px;
   background-color: white;
   font-family: inherit;
   font-size: 16px;
+  font-weight: bold;
   cursor: pointer;
+  box-shadow: 0 5px 0 var(--encre);
+  transition: transform 0.1s, box-shadow 0.1s, background-color 0.15s;
 }
 
-button:hover { background-color: var(--energie); }
-button:focus-visible { outline: 3px solid var(--fond); }
+/* Au survol : le bouton monte un peu et change de couleur */
+button:hover {
+  background-color: var(--energie);
+  transform: translateY(-2px);
+}
 
-.recommencer { margin-top: 16px; background-color: transparent; font-size: 14px; }
+/* Au clic : le bouton s'enfonce */
+button:active {
+  transform: translateY(4px);
+  box-shadow: 0 1px 0 var(--encre);
+}
 
-.score { margin-bottom: 0; }
+button:focus-visible { outline: 3px solid var(--fond-haut); outline-offset: 2px; }
 
+.recommencer {
+  margin-top: 22px;
+  background-color: transparent;
+  font-size: 14px;
+  box-shadow: none;
+}
+.recommencer:active { box-shadow: none; }
+
+.score { margin-bottom: 0; font-weight: bold; }
+
+/* ---------- Petits écrans (téléphone) ---------- */
+@media (max-width: 480px) {
+  .console { padding: 18px; }
+  .boutons { grid-template-columns: 1fr; }
+  .visage { font-size: 76px; }
+}
+
+/* Respecte les personnes qui désactivent les animations */
 @media (prefers-reduced-motion: reduce) {
-  .visage.rebond { animation: none; }
-  .remplissage { transition: none; }
+  .visage, .visage.rebond { animation: none; }
+  .remplissage, button { transition: none; }
 }
